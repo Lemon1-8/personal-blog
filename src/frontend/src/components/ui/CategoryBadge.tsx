@@ -12,7 +12,7 @@ export function CategoryBadge({ name, slug, className }: CategoryBadgeProps) {
   return (
     <Link
       href={`/categories/${slug}`}
-      className={`inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors ${className || ''}`}
+      className={`inline-flex items-center text-xs font-semibold uppercase tracking-wider text-vermilion-600 hover:text-vermilion-800 transition-colors ${className || ''}`}
     >
       {name}
     </Link>

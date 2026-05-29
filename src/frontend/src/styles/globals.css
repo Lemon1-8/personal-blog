@@ -3,55 +3,338 @@
 @tailwind utilities;
 
 @layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
   body {
-    @apply bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-50;
+    @apply bg-ink-50 text-ink-800;
+    background-image:
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    background-attachment: fixed;
+  }
+
+  ::selection {
+    @apply bg-vermilion-100 text-vermilion-800;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-ink-100;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-ink-300 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-ink-400;
   }
 }
 
 @layer components {
+  /* ── Article Content ── */
+  .article-content {
+    @apply text-body;
+    color: #3d3530;
+    line-height: 1.9;
+    word-break: break-word;
+  }
+
+  /* 段落间距 */
+  .article-content > * + * {
+    margin-top: 0;
+  }
+  .article-content > p + p {
+    margin-top: 1.25em;
+  }
+
+  /* H2 — 章节大标题，底部双线 */
   .article-content h2 {
-    @apply text-2xl font-semibold mt-8 mb-4;
+    @apply font-serif;
+    font-size: 1.625rem;
+    font-weight: 700;
+    color: #1a1714;
+    margin: 3rem 0 1.25rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e8e0d5;
+    position: relative;
+    line-height: 1.35;
   }
+  .article-content h2::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 3rem;
+    height: 3px;
+    background: #b83a20;
+  }
+
+  /* H3 — 小节标题，侧线装饰 */
   .article-content h3 {
-    @apply text-xl font-semibold mt-6 mb-3;
+    @apply font-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2d2522;
+    margin: 2.25rem 0 0.875rem;
+    padding-left: 0.875rem;
+    line-height: 1.4;
+    position: relative;
   }
+  .article-content h3::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.2rem;
+    bottom: 0.2rem;
+    width: 3px;
+    background: #d4c9b5;
+    border-radius: 2px;
+  }
+
+  /* H4 — 小标题 */
+  .article-content h4 {
+    @apply font-serif;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    color: #4a3f37;
+    margin: 1.75rem 0 0.625rem;
+    line-height: 1.45;
+  }
+
+  /* 正文段落 */
   .article-content p {
-    @apply mb-4 leading-relaxed;
+    margin: 0 0 1.25em;
+    color: #3d3530;
+    line-height: 1.9;
+    font-size: 0.938rem;
   }
+
+  /* 链接 */
   .article-content a {
-    @apply text-blue-600 underline hover:text-blue-800;
+    color: #a83232;
+    text-decoration: underline;
+    text-decoration-color: #e6c76a;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+    transition: all 0.15s ease;
   }
+  .article-content a:hover {
+    color: #6e1e1e;
+    text-decoration-color: #b83a20;
+  }
+
+  /* 加粗 */
+  .article-content strong {
+    color: #1a1714;
+    font-weight: 600;
+  }
+
+  /* 无序列表 */
   .article-content ul {
-    @apply list-disc pl-6 mb-4 space-y-1;
+    list-style: none;
+    padding: 0;
+    margin: 1.25em 0;
   }
+  .article-content ul li {
+    position: relative;
+    padding-left: 1.25rem;
+    margin-bottom: 0.5em;
+    color: #3d3530;
+    line-height: 1.8;
+  }
+  .article-content ul li::before {
+    content: '';
+    position: absolute;
+    left: 0.25rem;
+    top: 0.65em;
+    width: 5px;
+    height: 5px;
+    background: #c4a35a;
+    border-radius: 50%;
+  }
+  .article-content ul ul {
+    margin: 0.25em 0 0.25em 0.5em;
+  }
+  .article-content ul ul li::before {
+    background: transparent;
+    border: 1.5px solid #c4a35a;
+    width: 4px;
+    height: 4px;
+  }
+
+  /* 有序列表 */
   .article-content ol {
-    @apply list-decimal pl-6 mb-4 space-y-1;
+    list-style: none;
+    padding: 0;
+    margin: 1.25em 0;
+    counter-reset: step;
   }
+  .article-content ol li {
+    position: relative;
+    padding-left: 2rem;
+    margin-bottom: 0.5em;
+    color: #3d3530;
+    line-height: 1.8;
+    counter-increment: step;
+  }
+  .article-content ol li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 0.1em;
+    width: 1.35rem;
+    height: 1.35rem;
+    background: #f5f0e8;
+    color: #8b6b2c;
+    font-size: 0.75rem;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+  }
+
+  /* 引用块 */
   .article-content blockquote {
-    @apply border-l-4 border-blue-500 pl-4 italic text-slate-600 my-6;
+    margin: 2em 0;
+    padding: 1em 1.25em 1em 1.5em;
+    border-left: 3px solid #b83a20;
+    background: #fef7f5;
+    color: #6b5e53;
+    font-style: normal;
+    line-height: 1.75;
+    border-radius: 0 4px 4px 0;
   }
-  .article-content pre {
-    @apply bg-slate-900 text-slate-100 rounded-lg p-4 overflow-x-auto my-6 text-sm font-mono;
+  .article-content blockquote p {
+    margin: 0;
+    color: inherit;
   }
+  .article-content blockquote strong {
+    color: #4a3f37;
+  }
+
+  /* 行内代码 */
   .article-content code {
-    @apply bg-slate-100 text-pink-600 px-1.5 py-0.5 rounded text-sm font-mono;
+    background: #f5f0e8;
+    color: #b83a20;
+    padding: 0.15em 0.4em;
+    font-size: 0.85em;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    border-radius: 3px;
+    font-weight: 500;
+  }
+
+  /* 代码块 */
+  .article-content pre {
+    margin: 2em 0;
+    padding: 1.25rem 1.5rem;
+    background: #1e1b18;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 0.85rem;
+    line-height: 1.65;
+    border: 1px solid #2d2522;
   }
   .article-content pre code {
-    @apply bg-transparent text-slate-100 px-0 py-0;
+    background: transparent;
+    color: #e8d5b0;
+    padding: 0;
+    font-size: inherit;
+    font-weight: 400;
   }
+
+  /* 图片 */
   .article-content img {
-    @apply rounded-lg my-6 max-w-full h-auto;
+    max-width: 100%;
+    height: auto;
+    margin: 2em auto;
+    display: block;
+    border-radius: 2px;
+    box-shadow: 0 2px 16px rgba(26, 23, 20, 0.1);
   }
-  .article-content hr {
-    @apply my-8 border-slate-200;
-  }
+
+  /* 表格 */
   .article-content table {
-    @apply w-full border-collapse my-6;
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2em 0;
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+  .article-content thead {
+    border-bottom: 2px solid #d4c9b5;
   }
   .article-content th {
-    @apply bg-slate-50 text-left px-4 py-2 border border-slate-200 font-semibold;
+    text-align: left;
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #6b5e53;
+    background: #faf7f2;
   }
   .article-content td {
-    @apply px-4 py-2 border border-slate-200;
+    padding: 0.6rem 1rem;
+    color: #3d3530;
+    border-bottom: 1px solid #ebe3d5;
+  }
+  .article-content tbody tr:hover {
+    background: #fdfaf3;
+  }
+
+  /* 分隔线 */
+  .article-content hr {
+    border: none;
+    border-top: 1px dashed #d4c9b5;
+    margin: 2.5em 0;
+  }
+
+  /* 首个段落的首字放大 */
+  .article-content > p:first-of-type::first-letter {
+    float: left;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 3.2em;
+    font-weight: 700;
+    line-height: 0.75;
+    padding-right: 0.15em;
+    padding-top: 0.05em;
+    color: #b83a20;
+  }
+
+  /* ── Decorative divider ── */
+  .ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    color: theme('colors.amber.400');
+    font-size: 0.625rem;
+    letter-spacing: 0.25em;
+  }
+  .ornament::before,
+  .ornament::after {
+    content: '';
+    height: 1px;
+    width: 2.5rem;
+    @apply bg-ink-200;
+  }
+
+  /* ── Staggered animation ── */
+  .stagger-item {
+    opacity: 0;
+    animation: reveal 0.6s ease-out forwards;
   }
 }

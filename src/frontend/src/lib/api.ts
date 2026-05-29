@@ -331,6 +331,13 @@ export async function updateArticle(
   return put(`/articles/${id}`, data)
 }
 
+export async function toggleArticlePin(
+  id: string,
+  is_pinned: boolean
+): Promise<ApiResponse<{ id: string }>> {
+  return put(`/articles/${id}`, { is_pinned })
+}
+
 export async function deleteArticle(id: string): Promise<ApiResponse<null>> {
   return del(`/articles/${id}`)
 }
@@ -362,10 +369,10 @@ export async function getFavorites(params?: {
 }
 
 export async function getPinned(): Promise<ApiResponse<ArticleListItem[]>> {
-  return get('/articles', { is_pinned: 'true' as unknown as string | number | undefined }).then(
+  return get<PaginatedResponse<ArticleListItem>>('/articles', { is_pinned: 'true' }).then(
     (res) => ({
       ...res,
-      data: res.data?.items?.filter((a) => a.is_pinned).slice(0, 3) || [],
+      data: res.data?.items?.slice(0, 3) || [],
     })
   )
 }

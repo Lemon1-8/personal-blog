@@ -28,11 +28,6 @@ export function slugify(text: string): string {
     .replace(/^-+|-+$/g, '')
 }
 
-export function truncate(text: string, length: number): string {
-  if (text.length <= length) return text
-  return text.slice(0, length) + '...'
-}
-
 export function formatFileSize(bytes: number): string {
   if (bytes === 0) return '0 B'
   const k = 1024

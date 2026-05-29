@@ -113,8 +113,8 @@ export function RegisterForm() {
       />
 
       {errors.form && (
-        <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-          <p className="text-sm text-red-600">{errors.form}</p>
+        <div className="p-3 bg-vermilion-50 border border-vermilion-200">
+          <p className="text-sm text-vermilion-700">{errors.form}</p>
         </div>
       )}
 
@@ -122,9 +122,9 @@ export function RegisterForm() {
         注册
       </Button>
 
-      <p className="text-center text-sm text-slate-500">
+      <p className="text-center text-sm text-ink-500">
         已有账号？
-        <Link href="/auth/login" className="text-blue-600 hover:text-blue-800 font-medium ml-1">
+        <Link href="/auth/login" className="text-vermilion-600 hover:text-vermilion-800 font-medium ml-1">
           去登录
         </Link>
       </p>

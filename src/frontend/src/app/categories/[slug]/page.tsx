@@ -42,12 +42,15 @@ export default function CategoryArticlesPage() {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-1">
-        <div className="max-w-page mx-auto px-4 py-8">
+        <div className="max-w-page mx-auto px-6 py-10">
           {category && (
-            <div className="mb-8">
-              <h1 className="text-h2 text-slate-900">{category.name}</h1>
+            <div className="mb-10">
+              <p className="text-caption uppercase tracking-[0.2em] text-ink-400 mb-2 font-medium">
+                分类
+              </p>
+              <h1 className="font-serif text-display-sm text-ink-900 mb-3">{category.name}</h1>
               {category.description && (
-                <p className="text-sm text-slate-500 mt-2">{category.description}</p>
+                <p className="text-sm text-ink-500">{category.description}</p>
               )}
             </div>
           )}
@@ -56,7 +59,7 @@ export default function CategoryArticlesPage() {
           ) : (
             <>
               <ArticleList articles={articles} loading={loading} />
-              <div className="mt-8">
+              <div className="mt-10">
                 <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
               </div>
             </>

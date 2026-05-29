@@ -46,23 +46,23 @@ export function Modal({ isOpen, onClose, title, children, size = 'md' }: ModalPr
       aria-modal="true"
     >
       <div
-        className="fixed inset-0 bg-black/50 transition-opacity duration-300"
+        className="fixed inset-0 bg-ink-900/60 backdrop-blur-sm transition-opacity duration-300"
         onClick={onClose}
       />
       <div
         className={cn(
-          'relative w-full bg-white rounded-xl shadow-xl',
+          'relative w-full bg-white border border-ink-200 shadow-float',
           'transition-all duration-300 ease-out',
-          'p-6',
+          'p-6 rounded-sm',
           sizeClasses[size]
         )}
       >
         {title && (
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-slate-900">{title}</h2>
+          <div className="flex items-center justify-between mb-5">
+            <h2 className="font-serif text-xl font-semibold text-ink-900">{title}</h2>
             <button
               onClick={onClose}
-              className="p-1 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100 transition-colors"
+              className="p-1 text-ink-400 hover:text-ink-700 hover:bg-ink-100 transition-colors"
             >
               <X className="w-5 h-5" />
             </button>

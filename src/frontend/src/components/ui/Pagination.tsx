@@ -32,13 +32,13 @@ export function Pagination({ currentPage, totalPages, onPageChange }: Pagination
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage <= 1}
-        className="w-9 h-9 flex items-center justify-center rounded-lg text-sm text-slate-600 hover:bg-slate-100 disabled:text-slate-300 disabled:cursor-not-allowed"
+        className="w-9 h-9 flex items-center justify-center text-sm text-ink-400 hover:text-ink-700 hover:bg-ink-100 disabled:text-ink-300 disabled:cursor-not-allowed transition-colors"
       >
         <ChevronLeft className="w-4 h-4" />
       </button>
       {getPageNumbers().map((page, idx) =>
         page === '...' ? (
-          <span key={`ellipsis-${idx}`} className="w-9 h-9 flex items-center justify-center text-sm text-slate-400">
+          <span key={`ellipsis-${idx}`} className="w-9 h-9 flex items-center justify-center text-sm text-ink-400">
             ...
           </span>
         ) : (
@@ -46,10 +46,10 @@ export function Pagination({ currentPage, totalPages, onPageChange }: Pagination
             key={page}
             onClick={() => onPageChange(page)}
             className={cn(
-              'w-9 h-9 flex items-center justify-center rounded-lg text-sm',
+              'w-9 h-9 flex items-center justify-center text-sm transition-colors',
               page === currentPage
-                ? 'bg-blue-600 text-white hover:bg-blue-700'
-                : 'text-slate-600 hover:bg-slate-100'
+                ? 'bg-ink-800 text-ink-50'
+                : 'text-ink-500 hover:text-ink-700 hover:bg-ink-100'
             )}
           >
             {page}
@@ -59,7 +59,7 @@ export function Pagination({ currentPage, totalPages, onPageChange }: Pagination
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage >= totalPages}
-        className="w-9 h-9 flex items-center justify-center rounded-lg text-sm text-slate-600 hover:bg-slate-100 disabled:text-slate-300 disabled:cursor-not-allowed"
+        className="w-9 h-9 flex items-center justify-center text-sm text-ink-400 hover:text-ink-700 hover:bg-ink-100 disabled:text-ink-300 disabled:cursor-not-allowed transition-colors"
       >
         <ChevronRight className="w-4 h-4" />
       </button>

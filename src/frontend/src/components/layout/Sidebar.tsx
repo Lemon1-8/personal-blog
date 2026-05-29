@@ -50,20 +50,20 @@ export function Sidebar() {
   const pathname = usePathname()
 
   return (
-    <aside className="w-60 bg-slate-900 text-white flex flex-col h-screen sticky top-0">
-      <div className="p-4 border-b border-slate-700">
+    <aside className="w-60 bg-ink-900 text-ink-200 flex flex-col h-screen sticky top-0">
+      <div className="p-4 border-b border-ink-700">
         <Link href="/admin" className="flex items-center gap-2">
-          <span className="text-lg font-bold">管理后台</span>
+          <span className="font-serif text-lg font-bold text-ink-50">管理后台</span>
         </Link>
       </div>
 
       <nav className="flex-1 overflow-y-auto p-3 space-y-6">
         {sidebarItems.map((section) => (
           <div key={section.section}>
-            <p className="px-3 text-xs font-medium text-slate-500 uppercase tracking-wider mb-2">
+            <p className="px-3 text-[10px] font-medium text-ink-500 uppercase tracking-widest mb-2">
               {section.section}
             </p>
-            <div className="space-y-1">
+            <div className="space-y-0.5">
               {section.items.map((item) => {
                 const Icon = item.icon
                 const isActive =
@@ -74,10 +74,10 @@ export function Sidebar() {
                     key={item.href}
                     href={item.href}
                     className={cn(
-                      'flex items-center gap-3 px-3 py-2.5 text-sm rounded-lg transition-colors',
+                      'flex items-center gap-3 px-3 py-2.5 text-sm transition-colors',
                       isActive
-                        ? 'bg-blue-600 text-white font-medium'
-                        : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+                        ? 'bg-vermilion-600 text-white'
+                        : 'text-ink-400 hover:bg-ink-800 hover:text-ink-100'
                     )}
                   >
                     <Icon className="w-4 h-4" />
@@ -90,10 +90,10 @@ export function Sidebar() {
         ))}
       </nav>
 
-      <div className="p-3 border-t border-slate-700">
+      <div className="p-3 border-t border-ink-700">
         <Link
           href="/"
-          className="flex items-center gap-2 px-3 py-2.5 text-sm text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg transition-colors"
+          className="flex items-center gap-2 px-3 py-2.5 text-sm text-ink-400 hover:bg-ink-800 hover:text-ink-100 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           返回前台

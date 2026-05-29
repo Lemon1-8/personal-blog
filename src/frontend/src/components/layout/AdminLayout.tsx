@@ -33,16 +33,14 @@ export function AdminLayout({ children }: AdminLayoutProps) {
   }
 
   return (
-    <div className="flex min-h-screen bg-slate-50">
+    <div className="flex min-h-screen bg-ink-50">
       <Sidebar />
       <div className="flex-1 flex flex-col min-h-screen">
-        {/* Top Bar */}
-        <div className="h-14 bg-white border-b border-slate-200 flex items-center justify-between px-6 sticky top-0 z-10">
-          <div className="flex items-center gap-2 text-sm text-slate-500">
-            <span className="text-slate-900 font-medium">管理后台</span>
+        <div className="h-14 bg-white border-b border-ink-200 flex items-center justify-between px-6 sticky top-0 z-10">
+          <div className="flex items-center gap-2 text-sm text-ink-500">
+            <span className="text-ink-800 font-medium font-serif">管理后台</span>
           </div>
         </div>
-        {/* Content */}
         <main className="flex-1 p-6 overflow-y-auto">
           {children}
         </main>

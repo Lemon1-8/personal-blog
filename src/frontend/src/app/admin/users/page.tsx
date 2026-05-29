@@ -36,7 +36,7 @@ export default function AdminUsersPage() {
 
   const handleSave = async () => {
     if (editModal.user) {
-      await updateUser(editModal.user.id, formData)
+      await updateUser(editModal.user.id, { ...formData, role: formData.role as 'user' | 'admin' })
     }
     setEditModal({ open: false })
     load()

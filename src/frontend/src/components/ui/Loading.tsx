@@ -12,25 +12,31 @@ interface LoadingProps {
 export function Loading({ size = 'md', className, text }: LoadingProps) {
   const sizeClasses = {
     sm: 'w-4 h-4',
-    md: 'w-8 h-8',
-    lg: 'w-12 h-12',
+    md: 'w-6 h-6',
+    lg: 'w-10 h-10',
   }
 
   return (
-    <div className={cn('flex flex-col items-center justify-center py-12', className)}>
-      <Loader2 className={cn('animate-spin text-blue-600', sizeClasses[size])} />
-      {text && <p className="mt-3 text-sm text-slate-500">{text}</p>}
+    <div className={cn('flex flex-col items-center justify-center py-16', className)}>
+      <Loader2 className={cn('animate-spin text-vermilion-500', sizeClasses[size])} />
+      {text && <p className="mt-4 text-sm text-ink-400">{text}</p>}
     </div>
   )
 }
 
 export function SkeletonCard() {
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-6 animate-pulse">
-      <div className="h-4 bg-slate-200 rounded w-3/4 mb-3" />
-      <div className="h-3 bg-slate-200 rounded w-1/2 mb-4" />
-      <div className="h-3 bg-slate-200 rounded w-full mb-2" />
-      <div className="h-3 bg-slate-200 rounded w-5/6" />
+    <div className="bg-white border border-ink-200 p-6 animate-pulse">
+      <div className="flex items-center gap-2 mb-3">
+        <div className="h-3 bg-ink-200 w-16" />
+      </div>
+      <div className="h-5 bg-ink-200 w-3/4 mb-3" />
+      <div className="h-4 bg-ink-100 w-full mb-2" />
+      <div className="h-4 bg-ink-100 w-5/6" />
+      <div className="flex gap-3 mt-4">
+        <div className="h-3 bg-ink-100 w-12 rounded-sm" />
+        <div className="h-3 bg-ink-100 w-12 rounded-sm" />
+      </div>
     </div>
   )
 }

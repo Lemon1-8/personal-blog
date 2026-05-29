@@ -70,15 +70,15 @@ export function Editor({
   ]
 
   return (
-    <div className="border border-slate-300 rounded-lg overflow-hidden">
+    <div className="border border-ink-200 overflow-hidden">
       {/* Toolbar */}
-      <div className="flex items-center gap-1 px-3 py-2 bg-slate-50 border-b border-slate-200 flex-wrap">
+      <div className="flex items-center gap-0.5 px-3 py-2 bg-ink-100 border-b border-ink-200 flex-wrap">
         {toolbarItems.map((item) => (
           <button
             key={item.label}
             type="button"
             onClick={item.action}
-            className="p-1.5 text-slate-600 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors"
+            className="p-1.5 text-ink-500 hover:text-vermilion-600 hover:bg-vermilion-50 transition-colors"
             title={item.label}
           >
             <item.icon className="w-4 h-4" />
@@ -88,15 +88,15 @@ export function Editor({
 
       {/* Editor Area */}
       <textarea
-        className="editor-textarea w-full p-4 text-sm font-mono leading-relaxed resize-y focus:outline-none"
+        className="editor-textarea w-full p-4 text-sm font-mono leading-relaxed resize-y focus:outline-none bg-white text-ink-800 placeholder:text-ink-400"
         value={textareaValue}
         onChange={handleChange}
         placeholder={placeholder}
         style={{ minHeight }}
       />
 
-      {/* Preview Toggle Hint */}
-      <div className="px-4 py-2 bg-slate-50 border-t border-slate-200 text-xs text-slate-400">
+      {/* Hint */}
+      <div className="px-4 py-2 bg-ink-50 border-t border-ink-200 text-xs text-ink-400">
         支持 Markdown 语法
       </div>
     </div>

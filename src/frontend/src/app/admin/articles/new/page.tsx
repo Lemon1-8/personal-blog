@@ -8,6 +8,7 @@ import { Editor } from '@/components/article/Editor'
 import { createArticle, getCategories, getTags } from '@/lib/api'
 import { slugify } from '@/lib/utils'
 import type { Category, Tag } from '@/lib/api'
+import { Pin } from 'lucide-react'
 
 export default function NewArticlePage() {
   const router = useRouter()
@@ -19,6 +20,7 @@ export default function NewArticlePage() {
     slug: '',
     summary: '',
     content: '',
+    content_type: 'markdown',
     category_id: '',
     tag_ids: [] as string[],
     is_pinned: false,
@@ -62,7 +64,7 @@ export default function NewArticlePage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-h3 text-slate-900">新建文章</h1>
+        <h1 className="font-serif text-h3 text-ink-900">新建文章</h1>
         <div className="flex items-center gap-3">
           <Button variant="secondary" onClick={() => save('draft')} loading={saving}>
             保存草稿
@@ -88,17 +90,17 @@ export default function NewArticlePage() {
             placeholder="url-friendly-slug"
           />
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">摘要</label>
+            <label className="block text-sm font-medium text-ink-700 mb-1.5">摘要</label>
             <textarea
               value={formData.summary}
               onChange={(e) => setFormData({ ...formData, summary: e.target.value })}
               placeholder="文章摘要..."
               rows={3}
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-ink-200 bg-white text-sm focus:outline-none focus:ring-1 focus:ring-vermilion-300 focus:border-vermilion-300 placeholder:text-ink-400"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">正文</label>
+            <label className="block text-sm font-medium text-ink-700 mb-1.5">正文（Markdown）</label>
             <Editor
               value={formData.content}
               onChange={(content) => setFormData({ ...formData, content })}
@@ -107,49 +109,63 @@ export default function NewArticlePage() {
         </div>
 
         <div className="space-y-4">
-          <div className="bg-white rounded-xl border border-slate-200 p-4">
-            <label className="block text-sm font-medium text-slate-700 mb-2">分类</label>
-            <select
-              value={formData.category_id}
-              onChange={(e) => setFormData({ ...formData, category_id: e.target.value })}
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="">选择分类</option>
-              {categories.map((cat) => (
-                <option key={cat.id} value={cat.id}>{cat.name}</option>
-              ))}
-            </select>
+          <div className="bg-white border border-ink-200 p-4">
+            <h3 className="text-xs font-semibold text-ink-400 uppercase tracking-wider mb-3">发布设置</h3>
+
+            <div className="space-y-3">
+              <div>
+                <label className="block text-sm font-medium text-ink-700 mb-1.5">分类</label>
+                <select
+                  value={formData.category_id}
+                  onChange={(e) => setFormData({ ...formData, category_id: e.target.value })}
+                  className="w-full px-3 py-2 border border-ink-200 bg-white text-sm focus:outline-none focus:ring-1 focus:ring-vermilion-300 focus:border-vermilion-300"
+                >
+                  <option value="">选择分类</option>
+                  {categories.map((cat) => (
+                    <option key={cat.id} value={cat.id}>{cat.name}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <button
+                  type="button"
+                  onClick={() => setFormData({ ...formData, is_pinned: !formData.is_pinned })}
+                  className={`w-full flex items-center gap-3 px-4 py-3 border transition-all duration-200 ${
+                    formData.is_pinned
+                      ? 'border-amber-300 bg-amber-50 text-amber-800'
+                      : 'border-ink-200 bg-white text-ink-500 hover:border-ink-300'
+                  }`}
+                >
+                  <Pin className={`w-4 h-4 ${formData.is_pinned ? 'text-amber-500' : 'text-ink-300'}`} />
+                  <div className="text-left">
+                    <div className="text-sm font-medium">置顶文章</div>
+                    <div className="text-xs mt-0.5 opacity-60">
+                      {formData.is_pinned ? '已置顶，将在首页优先展示' : '点击置顶，首页优先展示'}
+                    </div>
+                  </div>
+                </button>
+              </div>
+            </div>
           </div>
 
-          <div className="bg-white rounded-xl border border-slate-200 p-4">
-            <label className="block text-sm font-medium text-slate-700 mb-2">标签</label>
+          <div className="bg-white border border-ink-200 p-4">
+            <h3 className="text-xs font-semibold text-ink-400 uppercase tracking-wider mb-3">标签</h3>
             <div className="flex flex-wrap gap-2">
               {allTags.map((tag) => (
                 <button
                   key={tag.id}
                   onClick={() => toggleTag(tag.id)}
-                  className={`px-2.5 py-1 text-xs rounded-full transition-colors ${
+                  className={`px-2.5 py-1 text-xs border transition-colors ${
                     formData.tag_ids.includes(tag.id)
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                      ? 'bg-ink-800 text-ink-50 border-ink-800'
+                      : 'bg-white text-ink-500 border-ink-200 hover:border-ink-300'
                   }`}
                 >
                   {tag.name}
                 </button>
               ))}
             </div>
-          </div>
-
-          <div className="bg-white rounded-xl border border-slate-200 p-4">
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={formData.is_pinned}
-                onChange={(e) => setFormData({ ...formData, is_pinned: e.target.checked })}
-                className="rounded border-slate-300 text-blue-600 focus:ring-blue-500"
-              />
-              <span className="text-sm text-slate-700">置顶文章</span>
-            </label>
           </div>
         </div>
       </div>

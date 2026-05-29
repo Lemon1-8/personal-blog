@@ -10,8 +10,8 @@ export default function RegisterPage() {
       <Header />
       <main className="flex-1 flex items-center justify-center py-12 px-4">
         <div className="w-full max-w-sm">
-          <div className="bg-white rounded-xl border border-slate-200 p-8">
-            <h1 className="text-h3 text-slate-900 text-center mb-6">注册</h1>
+          <div className="bg-white border border-ink-200 p-8">
+            <h1 className="font-serif text-h2 text-ink-900 text-center mb-6">注册</h1>
             <RegisterForm />
           </div>
         </div>

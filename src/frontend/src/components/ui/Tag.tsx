@@ -21,22 +21,24 @@ export function Tag({
   className,
 }: TagProps) {
   const baseClasses = cn(
-    'inline-flex items-center rounded-full font-medium',
-    size === 'sm' ? 'px-2.5 py-0.5 text-xs' : 'px-3 py-1 text-sm',
+    'inline-flex items-center font-medium transition-colors duration-200',
+    size === 'sm'
+      ? 'px-2.5 py-0.5 text-xs rounded-sm'
+      : 'px-3 py-1 text-sm rounded-sm',
     variant === 'default'
-      ? 'bg-slate-100 text-slate-600'
-      : 'bg-blue-100 text-blue-700',
-    clickable && 'hover:bg-blue-200 cursor-pointer transition-colors',
+      ? 'bg-ink-100 text-ink-500 hover:bg-ink-200 hover:text-ink-700'
+      : 'bg-vermilion-50 text-vermilion-700 hover:bg-vermilion-100',
+    clickable && 'cursor-pointer',
     className
   )
 
   if (clickable) {
     return (
       <Link href={`/tags/${slug}`} className={baseClasses}>
-        {name}
+        #{name}
       </Link>
     )
   }
 
-  return <span className={baseClasses}>{name}</span>
+  return <span className={baseClasses}>#{name}</span>
 }

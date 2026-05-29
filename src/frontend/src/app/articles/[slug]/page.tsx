@@ -49,12 +49,12 @@ export default function ArticleDetailPage() {
     return (
       <div className="min-h-screen flex flex-col">
         <Header />
-        <div className="flex-1 flex flex-col items-center justify-center">
-          <h2 className="text-xl font-semibold text-slate-900 mb-2">文章未找到</h2>
-          <p className="text-slate-500 mb-4">抱歉，该文章不存在或已被删除。</p>
+        <div className="flex-1 flex flex-col items-center justify-center py-20">
+          <h2 className="font-serif text-h2 text-ink-900 mb-2">文章未找到</h2>
+          <p className="text-ink-500 mb-6">抱歉，该文章不存在或已被删除。</p>
           <Link
             href="/articles"
-            className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700"
+            className="px-5 py-2 text-sm font-medium text-ink-50 bg-ink-800 hover:bg-ink-900 transition-colors"
           >
             返回文章列表
           </Link>
@@ -67,7 +67,7 @@ export default function ArticleDetailPage() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="flex-1 py-8 px-4">
+      <main className="flex-1 py-10 px-6">
         <ArticleDetail article={article} />
       </main>
       <Footer />

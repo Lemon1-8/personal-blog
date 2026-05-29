@@ -43,13 +43,16 @@ export default function TagArticlesPage() {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-1">
-        <div className="max-w-page mx-auto px-4 py-8">
+        <div className="max-w-page mx-auto px-6 py-10">
           {tag && (
-            <div className="mb-8">
-              <h1 className="text-h2 text-slate-900">
-                # {tag.name}
+            <div className="mb-10">
+              <p className="text-caption uppercase tracking-[0.2em] text-ink-400 mb-2 font-medium">
+                标签
+              </p>
+              <h1 className="font-serif text-display-sm text-ink-900 mb-2">
+                #{tag.name}
               </h1>
-              <p className="text-sm text-slate-500 mt-2">{tag.article_count} 篇文章</p>
+              <p className="text-sm text-ink-500 font-mono">{tag.article_count} 篇文章</p>
             </div>
           )}
           {loading ? (
@@ -57,7 +60,7 @@ export default function TagArticlesPage() {
           ) : (
             <>
               <ArticleList articles={articles} loading={loading} />
-              <div className="mt-8">
+              <div className="mt-10">
                 <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
               </div>
             </>

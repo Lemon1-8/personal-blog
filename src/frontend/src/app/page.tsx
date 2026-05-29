@@ -54,18 +54,36 @@ export default function HomePage() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
+
       <main className="flex-1">
-        <div className="max-w-page mx-auto px-4 py-8">
-          <div className="flex flex-col lg:flex-row gap-8">
+        <div className="max-w-page mx-auto px-6 py-10">
+          <div className="flex flex-col lg:flex-row gap-10">
             {/* Main Content */}
             <div className="flex-1 min-w-0">
+              {/* Hero area — editorial treatment */}
+              {!loading && (
+                <div className="mb-12">
+                  <p className="text-caption uppercase tracking-[0.2em] text-ink-400 mb-3 font-medium">
+                    个人博客
+                  </p>
+                  <h1 className="font-serif text-display text-ink-900 mb-3">
+                    技术 · 生活 · 随笔
+                  </h1>
+                  <p className="text-body-lg text-ink-500 max-w-lg leading-relaxed">
+                    记录思考与创造的过程。写代码、读好书、探索世界。
+                  </p>
+                </div>
+              )}
+
               {/* Pinned Articles */}
               {pinnedArticles.length > 0 && !loading && (
-                <section className="mb-10">
-                  <h2 className="text-h4 text-slate-900 mb-4 flex items-center gap-2">
-                    <span className="w-1 h-5 bg-blue-600 rounded-full" />
-                    置顶文章
-                  </h2>
+                <section className="mb-12">
+                  <div className="flex items-center gap-3 mb-5">
+                    <h2 className="text-xs uppercase tracking-widest text-ink-400 font-semibold">
+                      置顶
+                    </h2>
+                    <span className="flex-1 h-px bg-ink-200" />
+                  </div>
                   <div className="grid gap-4 md:grid-cols-3">
                     {pinnedArticles.map((article) => (
                       <ArticleCard key={article.id} article={article} variant="compact" />
@@ -76,16 +94,18 @@ export default function HomePage() {
 
               {/* Recent Articles */}
               <section>
-                <h2 className="text-h4 text-slate-900 mb-4 flex items-center gap-2">
-                  <span className="w-1 h-5 bg-blue-600 rounded-full" />
-                  最新文章
-                </h2>
+                <div className="flex items-center gap-3 mb-5">
+                  <h2 className="text-xs uppercase tracking-widest text-ink-400 font-semibold">
+                    最新文章
+                  </h2>
+                  <span className="flex-1 h-px bg-ink-200" />
+                </div>
                 <ArticleList articles={recentArticles} loading={loading} />
                 {!loading && page < totalPages && (
-                  <div className="mt-6 text-center">
+                  <div className="mt-8 text-center">
                     <button
                       onClick={loadMore}
-                      className="px-6 py-2 text-sm font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors"
+                      className="px-8 py-2.5 text-sm font-medium text-ink-600 border border-ink-300 hover:bg-ink-100 hover:text-ink-800 transition-colors duration-200"
                     >
                       加载更多
                     </button>
@@ -95,30 +115,32 @@ export default function HomePage() {
             </div>
 
             {/* Sidebar */}
-            <aside className="w-full lg:w-80 shrink-0">
-              <div className="sticky top-20 space-y-6">
+            <aside className="w-full lg:w-72 shrink-0">
+              <div className="sticky top-24 space-y-8">
                 {/* Categories */}
-                <div className="bg-white rounded-xl border border-slate-200 p-5">
-                  <h3 className="text-sm font-semibold text-slate-900 mb-3">分类</h3>
-                  <div className="space-y-2">
+                <div>
+                  <h3 className="text-xs uppercase tracking-widest text-ink-400 font-semibold mb-4">
+                    分类
+                  </h3>
+                  <div className="border border-ink-200 bg-white">
                     {categories.map((cat) => (
                       <Link
                         key={cat.id}
                         href={`/categories/${cat.slug}`}
-                        className="flex items-center justify-between px-3 py-2 text-sm rounded-lg hover:bg-slate-50 transition-colors"
+                        className="flex items-center justify-between px-4 py-3 text-sm hover:bg-ink-50 transition-colors border-b border-ink-100 last:border-b-0"
                       >
-                        <span className="text-slate-600">{cat.name}</span>
-                        <span className="text-xs text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full">
-                          {cat.article_count}
-                        </span>
+                        <span className="text-ink-600">{cat.name}</span>
+                        <span className="text-xs text-ink-400 font-mono">{cat.article_count}</span>
                       </Link>
                     ))}
                   </div>
                 </div>
 
                 {/* Hot Tags */}
-                <div className="bg-white rounded-xl border border-slate-200 p-5">
-                  <h3 className="text-sm font-semibold text-slate-900 mb-3">热门标签</h3>
+                <div>
+                  <h3 className="text-xs uppercase tracking-widest text-ink-400 font-semibold mb-4">
+                    热门标签
+                  </h3>
                   <div className="flex flex-wrap gap-2">
                     {hotTags.map((tag) => (
                       <Tag key={tag.id} name={tag.name} slug={tag.slug} variant="primary" />
@@ -130,6 +152,7 @@ export default function HomePage() {
           </div>
         </div>
       </main>
+
       <Footer />
     </div>
   )

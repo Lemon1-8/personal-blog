@@ -1,18 +1,18 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { ArticleList } from '@/components/article/ArticleList'
 import { Pagination } from '@/components/ui/Pagination'
-import { Tag } from '@/components/ui/Tag'
+import { Loading } from '@/components/ui/Loading'
 import { getArticles, getCategories, getTags } from '@/lib/api'
 import type { ArticleListItem, Category, Tag as TagType } from '@/lib/api'
 import { X } from 'lucide-react'
 import Link from 'next/link'
 
-export default function ArticlesPage() {
+function ArticlesContent() {
   const searchParams = useSearchParams()
   const [articles, setArticles] = useState<ArticleListItem[]>([])
   const [categories, setCategories] = useState<Category[]>([])
@@ -61,43 +61,48 @@ export default function ArticlesPage() {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-1">
-        <div className="max-w-page mx-auto px-4 py-8">
+        <div className="max-w-page mx-auto px-6 py-10">
           {/* Title */}
-          <div className="mb-6">
-            <h1 className="text-h2 text-slate-900">文章</h1>
+          <div className="mb-8">
+            <p className="text-caption uppercase tracking-[0.2em] text-ink-400 mb-2 font-medium">
+              文章
+            </p>
+            <h1 className="font-serif text-display-sm text-ink-900">
+              全部文章
+            </h1>
             {currentCategory && (
-              <p className="text-sm text-slate-500 mt-1">分类：{currentCategory.name}</p>
+              <p className="text-sm text-ink-500 mt-2">分类：{currentCategory.name}</p>
             )}
             {currentTag && (
-              <p className="text-sm text-slate-500 mt-1">标签：{currentTag.name}</p>
+              <p className="text-sm text-ink-500 mt-1">标签：{currentTag.name}</p>
             )}
           </div>
 
-          {/* Filters */}
-          <div className="flex flex-wrap items-center gap-2 mb-6">
+          {/* Toolbar */}
+          <div className="flex flex-wrap items-center gap-3 mb-8 pb-6 border-b border-ink-200">
             {(categorySlug || tagSlug) && (
               <Link
                 href="/articles"
-                className="inline-flex items-center gap-1 px-3 py-1.5 text-sm bg-blue-100 text-blue-700 rounded-full hover:bg-blue-200 transition-colors"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs bg-vermilion-50 text-vermilion-700 border border-vermilion-200 hover:bg-vermilion-100 transition-colors"
               >
                 <X className="w-3 h-3" />
                 清除筛选
               </Link>
             )}
             <div className="flex-1" />
-            <div className="flex items-center gap-1 bg-slate-100 rounded-lg p-0.5">
+            <div className="flex items-center border border-ink-200 bg-white">
               <button
                 onClick={() => setViewMode('list')}
-                className={`px-3 py-1.5 text-xs rounded-md transition-colors ${
-                  viewMode === 'list' ? 'bg-white shadow-sm text-slate-900' : 'text-slate-500 hover:text-slate-700'
+                className={`px-3 py-1.5 text-xs transition-colors ${
+                  viewMode === 'list' ? 'bg-ink-800 text-ink-50' : 'text-ink-500 hover:text-ink-700'
                 }`}
               >
                 列表
               </button>
               <button
                 onClick={() => setViewMode('grid')}
-                className={`px-3 py-1.5 text-xs rounded-md transition-colors ${
-                  viewMode === 'grid' ? 'bg-white shadow-sm text-slate-900' : 'text-slate-500 hover:text-slate-700'
+                className={`px-3 py-1.5 text-xs transition-colors ${
+                  viewMode === 'grid' ? 'bg-ink-800 text-ink-50' : 'text-ink-500 hover:text-ink-700'
                 }`}
               >
                 网格
@@ -105,14 +110,14 @@ export default function ArticlesPage() {
             </div>
           </div>
 
-          {/* Category Filter */}
-          <div className="flex flex-wrap gap-2 mb-6">
+          {/* Category filter pills */}
+          <div className="flex flex-wrap gap-2 mb-8">
             <Link
               href="/articles"
-              className={`px-3 py-1.5 text-sm rounded-full transition-colors ${
+              className={`px-3 py-1.5 text-xs border transition-colors ${
                 !categorySlug && !tagSlug
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                  ? 'bg-ink-800 text-ink-50 border-ink-800'
+                  : 'bg-white text-ink-500 border-ink-200 hover:border-ink-300 hover:text-ink-700'
               }`}
             >
               全部
@@ -121,10 +126,10 @@ export default function ArticlesPage() {
               <Link
                 key={cat.id}
                 href={`/articles?category=${cat.slug}`}
-                className={`px-3 py-1.5 text-sm rounded-full transition-colors ${
+                className={`px-3 py-1.5 text-xs border transition-colors ${
                   categorySlug === cat.slug
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    ? 'bg-ink-800 text-ink-50 border-ink-800'
+                    : 'bg-white text-ink-500 border-ink-200 hover:border-ink-300 hover:text-ink-700'
                 }`}
               >
                 {cat.name}
@@ -136,12 +141,20 @@ export default function ArticlesPage() {
           <ArticleList articles={articles} loading={loading} variant={viewMode === 'grid' ? 'compact' : 'default'} />
 
           {/* Pagination */}
-          <div className="mt-8">
+          <div className="mt-10">
             <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
           </div>
         </div>
       </main>
       <Footer />
     </div>
+  )
+}
+
+export default function ArticlesPage() {
+  return (
+    <Suspense fallback={<Loading size="lg" text="加载中..." />}>
+      <ArticlesContent />
+    </Suspense>
   )
 }

@@ -23,8 +23,9 @@ export function ArticleList({
 
   if (!articles || articles.length === 0) {
     return (
-      <div className="py-16 text-center">
-        <p className="text-slate-400 text-lg">{emptyText}</p>
+      <div className="py-20 text-center">
+        <p className="text-ink-400 font-serif text-lg italic">{emptyText}</p>
+        <div className="ornament mt-6">✽</div>
       </div>
     )
   }

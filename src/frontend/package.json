@@ -11,12 +11,13 @@
     "test:watch": "jest --watch --passWithNoTests"
   },
   "dependencies": {
+    "dayjs": "^1.11.0",
+    "lucide-react": "^0.400.0",
+    "marked": "^18.0.4",
     "next": "^14.2.0",
     "react": "^18.3.0",
     "react-dom": "^18.3.0",
-    "zustand": "^4.5.0",
-    "dayjs": "^1.11.0",
-    "lucide-react": "^0.400.0"
+    "zustand": "^4.5.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.4.0",

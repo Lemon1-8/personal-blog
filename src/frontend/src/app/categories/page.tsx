@@ -22,26 +22,31 @@ export default function CategoriesPage() {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-1">
-        <div className="max-w-page mx-auto px-4 py-8">
-          <h1 className="text-h2 text-slate-900 mb-8">分类</h1>
+        <div className="max-w-page mx-auto px-6 py-10">
+          <p className="text-caption uppercase tracking-[0.2em] text-ink-400 mb-2 font-medium">
+            分类
+          </p>
+          <h1 className="font-serif text-display-sm text-ink-900 mb-10">
+            文章分类
+          </h1>
           {loading ? (
             <Loading />
           ) : (
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {categories.map((cat) => (
                 <Link
                   key={cat.id}
                   href={`/categories/${cat.slug}`}
-                  className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 group"
+                  className="group block bg-white border border-ink-200 p-6 hover:shadow-card-hover hover:-translate-y-0.5 transition-all duration-300"
                 >
-                  <h2 className="text-lg font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">
+                  <h2 className="font-serif text-xl font-semibold text-ink-900 group-hover:text-vermilion-700 transition-colors mb-3">
                     {cat.name}
                   </h2>
                   {cat.description && (
-                    <p className="text-sm text-slate-500 mt-2">{cat.description}</p>
+                    <p className="text-sm text-ink-500 leading-relaxed">{cat.description}</p>
                   )}
-                  <div className="mt-4 flex items-center gap-2 text-sm">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
+                  <div className="mt-5 pt-4 border-t border-ink-100">
+                    <span className="text-xs text-ink-400 font-mono">
                       {cat.article_count} 篇文章
                     </span>
                   </div>
